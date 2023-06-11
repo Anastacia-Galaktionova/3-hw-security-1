@@ -1,0 +1,19 @@
+package com.sample.employees.security;
+
+import com.sample.employees.entity.Department;
+import io.jmix.security.model.EntityAttributePolicyAction;
+import io.jmix.security.model.EntityPolicyAction;
+import io.jmix.security.role.annotation.EntityAttributePolicy;
+import io.jmix.security.role.annotation.EntityPolicy;
+import io.jmix.security.role.annotation.ResourceRole;
+
+import javax.annotation.Nonnull;
+
+@Nonnull
+@ResourceRole(name = "Access to departments", code = "access-to-departments")
+public interface AccessToDepartmentsRole {
+    @EntityAttributePolicy(entityClass = Department.class, attributes = "notes", action = EntityAttributePolicyAction.MODIFY)
+    @EntityAttributePolicy(entityClass = Department.class, attributes = {"id", "name", "internalPhoneNumber"}, action = EntityAttributePolicyAction.VIEW)
+    @EntityPolicy(entityClass = Department.class, actions = EntityPolicyAction.READ)
+    void department();
+}
